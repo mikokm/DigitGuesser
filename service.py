@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from celery_app import add
 
 app = Flask("OCR-service", static_url_path='/static')
@@ -11,8 +11,8 @@ def root():
 
 @app.route('/add', methods=['POST'])
 def process_hello():
-    print request.headers
-    print request.get_data()
+    # print request.headers
+    # print request.get_data()
     content = request.get_json()
 
     if not content:

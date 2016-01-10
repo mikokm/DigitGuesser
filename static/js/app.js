@@ -16,7 +16,7 @@ function send() {
         url: "/add",
         type: "POST",
         data: JSON.stringify(data),
-        contentType: "application/json; charset=utf-8",
+        contentType: "application/json; charset=utf-8"
     }).done(function(data) {
         createQuery(data);
     });
