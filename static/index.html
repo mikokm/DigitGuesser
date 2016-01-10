@@ -6,17 +6,16 @@
     <link rel="stylesheet" type="text/css" href="static/css/style.css">
 </head>
 <body>
-<!--
     <div>
-        <canvas id="canvas" width="600" height="600"></canvas>
+        <canvas id="canvas" width="400" height="400"></canvas>
     </div>
--->
+
     <div>
         <form>
             <label for="inputX">y</label><input id="inputX" type="text">
             <label for="inputY">x</label><input id="inputY" type="text">
 
-            <button type="button" onclick="send()">Send</button>
+            <button id="sendButton" type="button" onclick="send()">Send</button>
         </form>
     </div>
 
@@ -24,6 +23,8 @@
     </div>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/Canvas.js"></script>
+    <script type="text/javascript" src="static/js/Grid.js"></script>
     <script type="text/javascript" src="static/js/app.js"></script>
 </body>
 </html>

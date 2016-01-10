@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function Grid(width, height) {
     this.width = width;
