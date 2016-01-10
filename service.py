@@ -16,21 +16,25 @@ def process_hello():
     content = request.get_json()
 
     if not content:
-        print "Invalid request"
         return "Invalid request."
 
-    x = content['x']
-    y = content['y']
+    x = int(content['x'])
+    y = int(content['y'])
 
     print "Executing task with x=%s, y=%s" % (x, y)
 
     task = add.delay(x, y)
-    return "Task: %s" % task.id
+    return task.id
 
 
-@app.route('/task/<:uuid>')
+@app.route('/task/<uuid>')
 def task_status(uuid):
-    return add.AsyncResult(uuid).state
+    result = add.AsyncResult(uuid)
+
+    if result.ready():
+        return str(result.result)
+
+    return result.state
 
 if __name__ == "__main__":
     app.run(debug=True)
