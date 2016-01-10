@@ -24,6 +24,6 @@ Grid.prototype.set = function (x, y, v) {
     this.data[x][y] = v;
 };
 
-Grid.prototype.toggle = function (x, y) {
-    this.data[x][y] = this.data[x][y] ? 0 : 1;
+Grid.prototype.toJSON = function() {
+    return JSON.stringify(this.data);
 };

@@ -10,9 +10,12 @@ function createQuery(id) {
     $("#taskId").append($("<div/>").append(a));
 }
 
-function send() {
-    var data = {x: $("#inputX").val(), y: $("#inputY").val()};
-    console.log(data);
+app.clearCanvas = function () {
+    app.canvas.clear();
+};
+
+app.sendCanvas = function () {
+    var data = app.canvas.toJSON();
 
     $.ajax({
         url: "/add",
@@ -21,8 +24,10 @@ function send() {
         contentType: "application/json; charset=utf-8"
     }).done(function (data) {
         createQuery(data);
+    }).fail(function () {
+        console.log("Ajax request failed.")
     });
-}
+};
 
 $(document).ready(function () {
     var canvas = $("#canvas");

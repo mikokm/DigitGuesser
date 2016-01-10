@@ -25,8 +25,9 @@ Canvas.prototype.draw = function () {
     }
 };
 
-Canvas.prototype.getGrid = function() {
-    return grid;
+Canvas.prototype.clear = function() {
+    this.grid.clear();
+    this.draw();
 };
 
 Canvas.prototype.handleMouse = function () {
@@ -42,7 +43,7 @@ Canvas.prototype.handleMouse = function () {
         button = -1;
     });
 
-    $(window).mousemove(function () {
+    $(window).mousemove(function (event) {
         if (button != -1) {
             update(event.clientX, event.clientY, button);
         }
@@ -52,6 +53,10 @@ Canvas.prototype.handleMouse = function () {
 Canvas.prototype.initialize = function () {
     this.draw();
     this.handleMouse();
+};
+
+Canvas.prototype.toJSON = function() {
+    return JSON.stringify(this.grid.data);
 };
 
 Canvas.prototype.updateGrid = function (x, y, type) {

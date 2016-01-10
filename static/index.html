@@ -12,17 +12,15 @@
 
     <div>
         <form>
-            <label for="inputX">y</label><input id="inputX" type="text">
-            <label for="inputY">x</label><input id="inputY" type="text">
-
-            <button id="sendButton" type="button" onclick="send()">Send</button>
+            <button id="sendButton" type="button" onclick="app.sendCanvas()">What digit is it?</button>
+            <button id="clearButton" type="button" onclick="app.clearCanvas()">Clear</button>
         </form>
     </div>
 
     <div id="taskId">
     </div>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="static/js/Canvas.js"></script>
     <script type="text/javascript" src="static/js/Grid.js"></script>
     <script type="text/javascript" src="static/js/app.js"></script>

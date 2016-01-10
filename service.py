@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, abort
 from celery_app import add
 
 app = Flask("OCR-service", static_url_path='/static')
@@ -11,20 +11,20 @@ def root():
 
 @app.route('/add', methods=['POST'])
 def process_hello():
-    # print request.headers
-    # print request.get_data()
+    print request.headers
+    print request.get_data()
     content = request.get_json()
 
     if not content:
-        return "Invalid request."
+        abort(400)
+        return
 
-    x = int(content['x'])
-    y = int(content['y'])
+    abort(400)
 
-    print "Executing task with x=%s, y=%s" % (x, y)
+    return "None"
 
-    task = add.delay(x, y)
-    return task.id
+    # task = add.delay(x, y)
+    # return task.id
 
 
 @app.route('/task/<uuid>')
