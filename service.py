@@ -1,5 +1,6 @@
 from flask import Flask, request, abort
 from celery_app import add
+import json
 
 app = Flask("OCR-service", static_url_path='/static')
 
@@ -11,9 +12,14 @@ def root():
 
 @app.route('/add', methods=['POST'])
 def process_hello():
-    print request.headers
-    print request.get_data()
-    content = request.get_json()
+    headers, data = request.headers, request.get_data()
+
+    # print headers
+    # print data
+
+    content = json.loads(request.get_json())
+    print type(content)
+    print content['canvas']
 
     if not content:
         abort(400)

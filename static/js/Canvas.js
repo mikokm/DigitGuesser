@@ -56,7 +56,7 @@ Canvas.prototype.initialize = function () {
 };
 
 Canvas.prototype.toJSON = function() {
-    return JSON.stringify(this.grid.data);
+    return JSON.stringify({ canvas: this.grid.data });
 };
 
 Canvas.prototype.updateGrid = function (x, y, type) {

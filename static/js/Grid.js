@@ -23,7 +23,3 @@ Grid.prototype.get = function (x, y) {
 Grid.prototype.set = function (x, y, v) {
     this.data[x][y] = v;
 };
-
-Grid.prototype.toJSON = function() {
-    return JSON.stringify(this.data);
-};
