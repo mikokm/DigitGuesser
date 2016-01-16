@@ -1,3 +1,4 @@
+import gzip
 import struct
 import numpy as np
 import scipy.spatial.distance as dist
@@ -5,13 +6,13 @@ from sklearn.preprocessing import Binarizer
 
 
 def validate_data(data, header, length):
-    return struct.unpack('>II', data.read(8)) == (header, length)
+    return struct.unpack('>II', data[0:8]) == (header, length)
 
 
 def load_mnist_data():
     try:
-        label_data = open('train-labels-idx1-ubyte', 'rb')
-        image_data = open('train-images-idx3-ubyte', 'rb')
+        label_data = gzip.open('train-labels-idx1-ubyte.gz', 'rb').read()
+        image_data = gzip.open('train-images-idx3-ubyte.gz', 'rb').read()
     except IOError:
         print "Failed to open MNIST data!"
         return False
@@ -20,16 +21,17 @@ def load_mnist_data():
         print "MNIST data is invalid!"
         return False
 
-    labels = np.fromfile(label_data, dtype=np.int8)
+    labels = np.frombuffer(label_data[8:], dtype=np.int8)
 
-    rows, cols = struct.unpack('>II', image_data.read(8))
-    images = np.fromfile(image_data, dtype=np.uint8).reshape(len(labels), rows * cols)
+    rows, cols = struct.unpack('>II', image_data[8:16])
+    images = np.frombuffer(image_data[16:], dtype=np.uint8).reshape(len(labels), rows * cols)
 
     return images, labels
 
 
 def knn_classifier(images, instance):
-    dists = dist.cdist(images, [instance])
+    data = np.array(instance, np.int8).T
+    dists = dist.cdist(images, [data.flatten()])
     return dists.argmin(0)
 
 
@@ -39,10 +41,8 @@ def initialize():
     binarizer = Binarizer().fit(images)
     images_binarized = binarizer.transform(images)
 
-    print labels[0:5]
+    return images_binarized, labels
 
-    print labels[knn_classifier(images_binarized, images[0])]
-    print labels[knn_classifier(images_binarized, images[1])]
 
 if __name__ == '__main__':
     initialize()

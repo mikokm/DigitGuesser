@@ -1,5 +1,5 @@
 from flask import Flask, request, abort
-from celery_app import add
+from celery_app import guess
 import json
 
 app = Flask("DigitGuesser", static_url_path='/static')
@@ -12,31 +12,20 @@ def root():
 
 @app.route('/add', methods=['POST'])
 def process_hello():
-    headers, data = request.headers, request.get_data()
-
-    # print headers
-    # print data
-
     content = json.loads(request.get_json())
-    print type(content)
     arr = content['canvas']
-    print len(arr)
 
     if not content:
         abort(400)
         return
 
-    abort(400)
-
-    return "None"
-
-    # task = add.delay(x, y)
-    # return task.id
+    task = guess.delay(arr)
+    return task.id
 
 
 @app.route('/task/<uuid>')
 def task_status(uuid):
-    result = add.AsyncResult(uuid)
+    result = guess.AsyncResult(uuid)
 
     if result.ready():
         return str(result.result)
