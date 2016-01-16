@@ -10,7 +10,7 @@ def root():
     return app.send_static_file("index.html")
 
 
-@app.route('/add', methods=['POST'])
+@app.route('/guess', methods=['POST'])
 def process_hello():
     content = json.loads(request.get_json())
     arr = content['canvas']

@@ -18,7 +18,7 @@ app.sendCanvas = function () {
     var data = app.canvas.toJSON();
 
     $.ajax({
-        url: "/add",
+        url: "/guess",
         type: "POST",
         data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8"
