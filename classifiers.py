@@ -1,7 +1,8 @@
 import gzip
 import struct
 import numpy as np
-import scipy.spatial.distance as dist
+
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import Binarizer
 
 
@@ -29,10 +30,9 @@ def load_mnist_data():
     return images, labels
 
 
-def knn_classifier(images, instance):
-    data = np.array(instance, np.int8).T
-    dists = dist.cdist(images, [data.flatten()])
-    return dists.argmin(0)
+def knn_classifier(knn, instance):
+    data = np.array(instance, np.int8).T.flatten()
+    return knn.predict([data])
 
 
 def initialize():
@@ -41,8 +41,14 @@ def initialize():
     binarizer = Binarizer().fit(images)
     images_binarized = binarizer.transform(images)
 
-    return images_binarized, labels
+    knn = KNeighborsClassifier(n_neighbors=3, metric='jaccard')
+    knn.fit(images_binarized, labels)
+
+    return knn
 
 
 if __name__ == '__main__':
-    initialize()
+    knn = initialize()
+
+    images, labels = load_mnist_data()
+    knn.predict(images[0])
