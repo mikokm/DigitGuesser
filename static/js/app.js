@@ -37,6 +37,6 @@ $(document).ready(function () {
         return false;
     });
 
-    app.canvas = new Canvas(canvas[0], 10);
+    app.canvas = new Canvas(canvas[0], 8);
     app.canvas.initialize();
 });

@@ -2,7 +2,7 @@ from flask import Flask, request, abort
 from celery_app import add
 import json
 
-app = Flask("OCR-service", static_url_path='/static')
+app = Flask("DigitGuesser", static_url_path='/static')
 
 
 @app.route('/', methods=['GET'])
@@ -19,7 +19,8 @@ def process_hello():
 
     content = json.loads(request.get_json())
     print type(content)
-    print content['canvas']
+    arr = content['canvas']
+    print len(arr)
 
     if not content:
         abort(400)
